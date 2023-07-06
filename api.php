@@ -1,6 +1,7 @@
 <?php
 // URL de la API
-$url = 'http:///api/endpoint';
+//$url = 'http:///api/endpoint'; cambio en la conexion pendiente
+
 
 // Inicializar la sesión cURL
 $ch = curl_init($url);
