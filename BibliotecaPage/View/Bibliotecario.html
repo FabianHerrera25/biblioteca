@@ -1,0 +1,21 @@
+﻿<div ng-init="Biblioterio_Get()">
+    <dir-pagination-controls boundary-links="true" direction-links="true" pagination-id="Bibliotecarios"></dir-pagination-controls>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido Paterno</th>
+                <th>Apellido Materno</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr dir-paginate="e in BibliotecarioMod | filter: PalabraClave | orderBy:ColumnName:reverse |itemsPerPage:RegistrosXPag as mainItems" pagination-id="Bibliotecarios">
+                <td>{{e.nombre}}</td>
+                <td>{{e.aPaterno}}</td>
+                <td>{{e.aMaterno}}</td>
+            </tr>
+        </tbody>
+        <dir-pagination-controls boundary-links="true" direction-links="true" pagination-id="Bibliotecarios"></dir-pagination-controls>
+        <h1 ng-if="mainItems.length==0">No se encontrarón registros</h1>
+    </table>
+</div>
