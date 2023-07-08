@@ -128,13 +128,13 @@ Biblioteca.controller('BibliotecaController', async function ($http, $cookies, $
     };
 });
 Biblioteca.config(function ($routeProvider) {
-$routeProvider.
-    when('/', { title: 'Control', templateUrl: '../View/Bibliotecario.html', controller: 'BibliotecariosController' }).
-    when('/Bibliotecarios', { title: 'Control', templateUrl: '../View/Bibliotecario'}).
-    when('/Usuarios', { title: 'Usuario', templateUrl: '../View/Usuario', controller: 'BibliotecariosController' }).
-    when('/Libros', { title: 'Perfil', templateUrl: '../View/Libro', controller: 'UsuariosController' }).
-    when("/Prestamos", { templateUrl: '../View/Prestamo', controller: "PrestamosController" }).
-    otherwise({templateUrl: '<h1>Otherwise</h1>'});
+    $routeProvider.
+        when('/', { title: 'Control', templateUrl: '../View/Bibliotecario.html', controller: 'BibliotecariosController' }).
+        when('/Bibliotecarios', { title: 'Control', templateUrl: '../View/Bibliotecario' }).
+        when('/Usuarios', { title: 'Usuario', templateUrl: '../View/Usuario', controller: 'BibliotecariosController' }).
+        when('/Libros', { title: 'Perfil', templateUrl: '../View/Libro', controller: 'UsuariosController' }).
+        when("/Prestamos", { templateUrl: '../View/Prestamo', controller: "PrestamosController" }).
+        otherwise({ templateUrl: '<h1>Otherwise</h1>' });
 });
 Biblioteca.filter('Fecha', ['$filter', $filter =>
     (date, format, timezone) =>
