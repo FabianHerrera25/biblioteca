@@ -72,24 +72,35 @@
     <Content Include="assets\demo\chart-pie-demo.js" />
     <Content Include="assets\demo\datatables-demo.js" />
     <Content Include="assets\img\error-404-monochrome.svg" />
+    <Content Include="css\MyStyles.css" />
     <Content Include="css\style.min.css" />
     <Content Include="css\styles.css" />
     <Content Include="js\AngularJS\angular-route.js" />
     <Content Include="js\AngularJS\angular.min.js" />
     <Content Include="js\AngularJS\App.js" />
+    <Content Include="js\AngularJS\Prestamo.js" />
+    <Content Include="js\AngularJS\Bibliotecarios.js" />
+    <Content Include="js\AngularJS\Libros.js" />
+    <Content Include="js\AngularJS\Contactos.js" />
+    <Content Include="js\AngularJS\Usuarios.js" />
     <Content Include="js\AngularJS\cookies.js" />
     <Content Include="js\AngularJS\cookieWriter.js" />
     <Content Include="js\AngularJS\dirPagination.js" />
-    <Content Include="js\AngularJS\Bibliotecarios.js" />
-    <Content Include="js\AngularJS\UsuariosController.js" />
+    <Content Include="js\AngularJS\Clientes.js" />
     <Content Include="js\bootstrap.bundle.min.js" />
     <Content Include="js\Chart2.8.0.min.js" />
     <Content Include="js\datatables-simple-demo.js" />
     <Content Include="js\fontawesomev6.3.0.js" />
+    <Content Include="js\jquery.min.js" />
     <Content Include="js\scripts.js" />
+    <Content Include="View\404.html" />
+    <Content Include="View\Cliente.html" />
     <Content Include="View\Bibliotecario.html" />
     <Content Include="View\Layout.html" />
+    <Content Include="View\Libro.html" />
+    <Content Include="View\Login.html" />
     <Content Include="View\PaginaPrincipal.html" />
+    <Content Include="View\Prestamo.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -97,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="js\AngularJS\angular.min.js.map" />
+    <Content Include="js\jquery.min.map" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

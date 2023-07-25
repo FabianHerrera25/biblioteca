@@ -1,14 +1,15 @@
 ﻿<!DOCTYPE html>
 <html lang="en" ng-app="Biblioteca" ng-controller="BibliotecaController">
-<head>
+<head ng-init="getCookie('user')">
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Dashboard - SB Admin</title>
+    <title>Biblioteca</title>
     <link href="/css/style.min.css" rel="stylesheet" />
     <link href="/css/styles.css" rel="stylesheet" />
+    <link href="../css/MyStyles.css" rel="stylesheet" />
     <script src="/js/fontawesomev6.3.0.js" crossorigin="anonymous"></script>
     <script src="../js/AngularJS/angular.min.js"></script>
     <script src="../js/AngularJS/angular-route.js"></script>
@@ -17,8 +18,14 @@
     <script src="../js/AngularJS/cookieWriter.js"></script>
     <script src="../js/AngularJS/App.js"></script>
     <script src="../js/AngularJS/Bibliotecarios.js"></script>
+    <script src="../js/AngularJS/Clientes.js"></script>
+    <script src="../js/AngularJS/Contactos.js"></script>
+    <script src="../js/AngularJS/Libros.js"></script>
+    <script src="../js/AngularJS/Usuarios.js"></script>
+    <script src="../js/AngularJS/Prestamo.js"></script>
+    <script src="../js/jquery.min.js"></script>
 </head>
-<body class="sb-nav-fixed">
+<body class="sb-nav-fixed">    
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
         <a class="navbar-brand ps-3" href="#!">Biblioteca</a>
@@ -27,7 +34,7 @@
         <!-- Navbar Search-->
         <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             <div class="input-group">
-                <input class="form-control" type="text" placeholder="Buscar ..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
+                <input class="form-control" type="text" placeholder="Buscar ..." aria-label="Search for..." aria-describedby="btnNavbarSearch" ng-model="PalabraClave" />
                 <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
             </div>
         </form>
@@ -36,8 +43,8 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="#!">Configuración</a></li>
-                    <li><a class="dropdown-item" href="#!">Cerrar Sesión</a></li>
+                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Usuario" ng-click="Usuario_GetById(decodedToken.idUsuario)">Configuración</a></li>
+                    <li><a class="dropdown-item" ng-click="Logout()">Cerrar Sesión</a></li>
                 </ul>
             </li>
         </ul>
@@ -48,13 +55,13 @@
                 <div class="sb-sidenav-menu">
                     <div class="nav">
                         <div class="sb-sidenav-menu-heading">Catalogos</div>
-                        <a class="nav-link" href="#!/Bibliotecario">
+                        <a class="nav-link" href="#!/Bibliotecarios">
                             <div class="sb-nav-link-icon"><i class="fas fa-user-shield"></i></div>
                             Bibliotecarios
                         </a>
-                        <a class="nav-link" href="#!/Usuarios">
-                            <div class="sb-nav-link-icon"><i class="fas fa-user-group"></i></div>
-                            Usuarios
+                        <a class="nav-link" href="#!/Clientes">
+                            <div class="sb-nav-link-icon"><i class="fas fa-user-shield"></i></div>
+                            Clientes
                         </a>
                         <a class="nav-link" href="#!/Libros">
                             <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
@@ -63,39 +70,65 @@
                         <a class="nav-link" href="#!/Prestamos">
                             <div class="sb-nav-link-icon"><i class="fas fa-calendar-day"></i></div>
                             Prestamos
-                        </a>                      
+                        </a>
+                        <!--<a class="nav-link" href="#!/d">
+                        <div class="sb-nav-link-icon"><i class="fas fa-calendar-day"></i></div>
+                        404
+                    </a>-->
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
-                    <div class="small">Logged in as:</div>
-                    Start Bootstrap
+                    <div class="small">Bienvenido {{decodedToken.rol}}:</div>
+                    {{decodedToken.nombre}}
                 </div>
             </nav>
         </div>
-        <div id="layoutSidenav_content">
-            <div>
-                <ng-view>
+        <div class="modal fade" id="Usuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Configuracion</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Nombre</label>
+                                <input type="text" class="form-control" ng-model="Usuario.nombre"/>
+                            </div>
+                            <div class="col-md-12">
+                                <label>Correo</label>
+                                <input type="text" class="form-control"  ng-model="Usuario.correo"/>
+                            </div>
+                            <div class="col-md-12">
+                                <label>Contraseña</label>
+                                <div class="input-group">
+                                    <input ng-model="Usuario.contrasenia" ng-attr-type="{{ showPassword ? 'text':'password'}}" placeholder="****************" class="form-control">
+                                    <span class="input-group-text" ng-click="showPassword=!showPassword"><i ng-class="{'fa-solid fa-eye': showPassword,'fa-solid fa-eye': !showPassword}"></i></span>
+                                </div>
+                            </div>
 
-                </ng-view>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar  </button>
+                        <button type="button" class="btn btn-primary" ng-click="Usuario_Upd(Usuario)">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="layoutSidenav_content">
+            <div class="container-fluid">
+                <ng-view></ng-view>
             </div>
 
             <footer class="py-4 bg-light mt-auto">
-                <div class="container-fluid px-4">
-                    <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted">Copyright &copy; Your Website 2023</div>
-                        <div>
-                            <a href="#">Privacy Policy</a>
-                            &middot;
-                            <a href="#">Terms &amp; Conditions</a>
-                        </div>
-                    </div>
-                </div>
+                <div class="container-fluid px-4"> </div>
             </footer>
         </div>
     </div>
     <script src="/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="/js/scripts.js"></script>
     <script src="/js/Chart2.8.0.min.js" crossorigin="anonymous"></script>
-    <!--Angular-->
 </body>
 </html>

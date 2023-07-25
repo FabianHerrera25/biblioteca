@@ -1,0 +1,171 @@
+﻿<div ng-init="Cliente_Get()">
+    <div ng-controller="UsuarioController">
+        <div class="table-responsive">
+            <ul class="pagination pagination-1">
+                <dir-pagination-controls boundary-links="true" direction-links="true" pagination-id="Usuario"></dir-pagination-controls>
+            </ul>
+            <table class="table table-bordered" ng-show="mainItems.length>0">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido Paterno</th>
+                        <th>Apellido Materno</th>
+                        <th>Telefono</th>
+                        <th>Celular</th>
+                        <th>
+                            Acciones
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#agregarcliente">
+                                Agregar
+                            </button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr dir-paginate="e in ClienteMod | filter: PalabraClave | orderBy:ColumnName:reverse |itemsPerPage:RegistrosXPag as mainItems" pagination-id="Usuario">
+                        <td>{{e.nombre}}</td>
+                        <td>{{e.aPaterno}}</td>
+                        <td>{{e.aMaterno}}</td>
+                        <td>{{e.telefono}}</td>
+                        <td>{{e.celular}}</td>
+                        <td>
+                            <button class="btn btn-primary" ng-click="LoadEdit(e)" data-bs-toggle="modal" data-bs-target="#editarcliente">Editar</button>
+                            <button class="btn btn-danger" ng-click="LoadEdit(e)" data-bs-toggle="modal" data-bs-target="#eliminarcliente">Eliminar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <ul class="pagination pagination-1">
+                <dir-pagination-controls boundary-links="true" direction-links="true" pagination-id="Usuario"></dir-pagination-controls>
+            </ul>
+            <h1 ng-if="mainItems.length==0">
+                No se encontrarón registros
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#agregarcliente">
+                    Agregar
+                </button>
+            </h1>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="agregarcliente" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar Cliente</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <nav>
+                            <div class="nav nav-tabs row" id="nav-tab" role="tablist">
+                                <div class="col-md-6 nav-link active" id="nav-DatosCliente-tab" data-bs-toggle="tab" data-bs-target="#nav-DatosCliente" type="button" role="tab" aria-controls="nav-DatosCliente" aria-selected="true">Datos Cliente</div>
+                                <div class="col-md-6 nav-link" id="nav-Usuario-tab" data-bs-toggle="tab" data-bs-target="#nav-Usuario" type="button" role="tab" aria-controls="nav-Usuario" aria-selected="false">Usuario</div>
+                            </div>
+                        </nav>
+                        <div class="tab-content" id="nav-tabContent">
+                            <div class="tab-pane active" id="nav-DatosCliente" role="tabpanel" aria-labelledby="nav-DatosCliente-tab">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label>Nombre</label>
+                                        <input class="form-control" ng-model="NewCliente.nombre" />
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label>Apellido Paterno</label>
+                                        <input class="form-control" ng-model="NewCliente.aPaterno" />
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label>Apellido Materno</label>
+                                        <input class="form-control" ng-model="NewCliente.aMaterno" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Telefono</label>
+                                        <input class="form-control" ng-model="NewCliente.telefono" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Celular</label>
+                                        <input class="form-control" ng-model="NewCliente.celular" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="nav-Usuario" role="tabpanel" aria-labelledby="nav-Usuario-tab">
+                                <div class=" row">
+                                    <div class="col-md-12">
+                                        <label>Nombre Usuario</label>
+                                        <input class="form-control" ng-model="NewCliente.nombreU" />
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label>Contraseña</label>
+                                        <div class="input-group">
+                                            <input ng-model="NewCliente.contrasenia" ng-attr-type="{{ showPassword ? 'text':'password'}}" placeholder="****************" class="form-control">
+                                            <span class="input-group-text" ng-click="showPassword=!showPassword"><i ng-class="{'fa-solid fa-eye': showPassword,'fa-solid fa-eye': !showPassword}"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label>Correo</label>
+                                        <input class="form-control" ng-model="NewCliente.correo" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar  </button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" ng-click="Cliente_Ins(NewCliente)">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="editarcliente" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Cliente</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class=" row">
+                            <div class="col-md-12">
+                                <label>Nombre</label>
+                                <input class="form-control" ng-model="EditCliente.nombre" />
+                            </div>
+                            <div class="col-md-6">
+                                <label>Apellido Paterno</label>
+                                <input class="form-control" ng-model="EditCliente.aPaterno" />
+                            </div>
+                            <div class="col-md-6">
+                                <label>Apellido Materno</label>
+                                <input class="form-control" ng-model="EditCliente.aMaterno" />
+                            </div>
+                            <div class="col-md-6">
+                                <label>Telefono</label>
+                                <input class="form-control" ng-model="EditCliente.telefono" />
+                            </div>
+                            <div class="col-md-6">
+                                <label>Celular</label>
+                                <input class="form-control" ng-model="EditCliente.celular" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar  </button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" ng-click="Cliente_Upd(EditCliente)">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="eliminarcliente" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar Cliente</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h1>¿Desea eliminar a {{EditCliente.nombre}} {{EditCliente.aPaterno}} {{EditCliente.aMaterno}}?</h1>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar  </button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" ng-click="Cliente_Del(EditCliente.idCliente)">Confirmar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

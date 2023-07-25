@@ -29,8 +29,8 @@ C:\Users\ANGEL\source\repos\BibliotecaPage\BibliotecaPage\bin\roslyn\VBCSCompile
 C:\Users\ANGEL\source\repos\BibliotecaPage\BibliotecaPage\bin\roslyn\VBCSCompiler.exe.config
 C:\Users\ANGEL\source\repos\BibliotecaPage\BibliotecaPage\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Users\ANGEL\source\repos\BibliotecaPage\BibliotecaPage\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\ANGEL\source\repos\BibliotecaPage\BibliotecaPage\obj\Debug\BibliotecaPage.csprojAssemblyReference.cache
 C:\Users\ANGEL\source\repos\BibliotecaPage\BibliotecaPage\obj\Debug\BibliotecaPage.csproj.CoreCompileInputs.cache
 C:\Users\ANGEL\source\repos\BibliotecaPage\BibliotecaPage\obj\Debug\BibliotecaPage.csproj.CopyComplete
 C:\Users\ANGEL\source\repos\BibliotecaPage\BibliotecaPage\obj\Debug\BibliotecaPage.dll
 C:\Users\ANGEL\source\repos\BibliotecaPage\BibliotecaPage\obj\Debug\BibliotecaPage.pdb
+C:\Users\ANGEL\source\repos\BibliotecaPage\BibliotecaPage\obj\Debug\BibliotecaPage.csprojAssemblyReference.cache

@@ -1,30 +1,44 @@
-﻿<div ng-init="Biblioterio_Get()">
-    <dir-pagination-controls boundary-links="true" direction-links="true" pagination-id="Bibliotecarios"></dir-pagination-controls>
-    <table class="table table-bordered" ng-show="mainItems.length>0">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nombre</th>
-                <th>Apellido Paterno</th>
-                <th>Apellido Materno</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr dir-paginate="e in BibliotecarioMod | filter: PalabraClave | orderBy:ColumnName:reverse |itemsPerPage:RegistrosXPag as mainItems" pagination-id="Bibliotecarios">
-                <td>{{e.idBibliotecario}}</td>
-                <td>{{e.nombre}}</td>
-                <td>{{e.aPaterno}}</td>
-                <td>{{e.aMaterno}}</td>
-            </tr>
-        </tbody>
-    </table>
-        <dir-pagination-controls boundary-links="true" direction-links="true" pagination-id="Bibliotecarios"></dir-pagination-controls>
-        <h1 ng-if="mainItems.length==0">No se encontrarón registros</h1>
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#agregarbibliotecario">
-        Agregar
-    </button>
-
+﻿<div ng-init="Bibliotecario_Get()">
+    <div class="table-responsive">
+        <ul class="pagination pagination-1">
+            <dir-pagination-controls boundary-links="true" direction-links="true" pagination-id="Bibliotecario"></dir-pagination-controls>
+        </ul>
+        <table class="table table-bordered" ng-show="mainItems.length>0">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido Paterno</th>
+                    <th>Apellido Materno</th>
+                    <th>
+                        Acciones
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#agregarbibliotecario">
+                            Agregar
+                        </button>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr dir-paginate="e in BibliotecarioMod | filter: PalabraClave | orderBy:ColumnName:reverse |itemsPerPage:RegistrosXPag as mainItems" pagination-id="Bibliotecario">
+                    <td>{{e.nombre}}</td>
+                    <td>{{e.aPaterno}}</td>
+                    <td>{{e.aMaterno}}</td>
+                    <td>
+                        <button class="btn btn-primary" ng-click="LoadEdit(e)" data-bs-toggle="modal" data-bs-target="#editarbibliotecario">Editar</button>
+                        <button class="btn btn-danger" ng-click="LoadEdit(e)" data-bs-toggle="modal" data-bs-target="#eliminarbibliotecario">Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <ul class="pagination pagination-1">
+            <dir-pagination-controls boundary-links="true" direction-links="true" pagination-id="Bibliotecario"></dir-pagination-controls>
+        </ul>
+        <h1 ng-if="mainItems.length==0">
+            No se encontrarón registros
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#agregarbibliotecario">
+                Agregar
+            </button>
+        </h1>
+    </div>
     <!-- Modal -->
     <div class="modal fade" id="agregarbibliotecario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -37,7 +51,7 @@
                     <div class=" row" ng-hide="Pass!=''">
                         <div class="col-md-12">
                             <label>Nombre</label>
-                            <input class="form-control" ng-model="NewBibliotecario.nombre"/>
+                            <input class="form-control" ng-model="NewBibliotecario.nombre" />
                         </div>
                         <div class="col-md-6">
                             <label>Apellido Paterno</label>
@@ -46,7 +60,7 @@
                         <div class="col-md-6">
                             <label>Apellido Materno</label>
                             <input class="form-control" ng-model="NewBibliotecario.aMaterno" />
-                        </div>       
+                        </div>
                     </div>
                     <div ng-show="Pass!=''">
                         <label>Contraseña :{{Pass}}</label>
@@ -54,7 +68,54 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar  </button>
-                    <button type="button" class="btn btn-primary" ng-click="Biblioterio_Ins(NewBibliotecario)">Guardar</button>
+                    <button type="button" class="btn btn-primary" ng-click="Bibliotecario_Ins(NewBibliotecario)">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="editarbibliotecario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar Bibliotecario</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class=" row">
+                        <div class="col-md-12">
+                            <label>Nombre</label>
+                            <input class="form-control" ng-model="EditBibliotecario.nombre" />
+                        </div>
+                        <div class="col-md-6">
+                            <label>Apellido Paterno</label>
+                            <input class="form-control" ng-model="EditBibliotecario.aPaterno" />
+                        </div>
+                        <div class="col-md-6">
+                            <label>Apellido Materno</label>
+                            <input class="form-control" ng-model="EditBibliotecario.aMaterno" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar  </button>
+                    <button type="button" class="btn btn-primary" ng-click="Bibliotecario_Upd(EditBibliotecario)">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="eliminarbibliotecario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar Bibliotecario</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h1>¿Desea eliminar a {{EditBibliotecario.nombre}}{{EditBibliotecario.aPaterno}}{{EditBibliotecario.aMaterno}}?</h1>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar  </button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" ng-click="Bibliotecario_Del(EditBibliotecario.idBibliotecario)">Confirmar</button>
                 </div>
             </div>
         </div>
